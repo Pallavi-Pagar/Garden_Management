@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="static/home1 (1).css">
+    
+    <title>Gardening Services</title>
+</head>
+<body>
+    <header class="header">
+         <!-- logo name  -->
+         <a href="#" class="logo"><i class="fas fa-tree"></i>MALI!</a>
+        
+        
+
+         <!-- navbar icons  -->
+         <!-- <div class="fas fa-bars"></div> -->
+         <!-- navbar link  -->
+         <nav class="navbar">
+             <ul>
+                 <li><a href="#home">Home</a></li>
+                 
+                 {% comment %} <li><a href="#team">Services</a></li> {% endcomment %}
+                 <li><a href="/book_service">Book service </a></li>
+                 <li><a href="/login/">Login </a></li>
+                 <li><a href="/contact"  >Contact us</a></li>
+                 {% comment %} <li><a href="#packages">Packages</a></li> {% endcomment %}
+                 <li><a href="#faq">FAQ</a></li>
+                 {% comment %} <li><a href='/logout'>Logout</a></li> {% endcomment %}
+             </ul>
+         </nav>
+     </header>
+
+         <!-- home section start  -->
+
+         {% comment %} Additional options ssection {% endcomment %}
+    <section class="additional-options">
+    <ul>
+        
+        <li><a href="#team">Services</a></li>
+        <li><a href="/shop_plant">Shop Plant</a></li>
+        <!-- <li><a href="customize_garden.html">Customize Garden</a></li> -->
+    </ul>
+    </section>
+
+    <body>
+        <header class="header">
+            <!-- logo and navbar already present -->
+        </header>
+    
+        <!-- ✅ Message display block -->
+        {% if messages %}
+            <div id="message-container">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+    
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                const messageContainer = document.getElementById("message-container");
+                if (messageContainer) {
+                  setTimeout(() => {
+                    messageContainer.style.transition = "opacity 0.5s ease-out";
+                    messageContainer.style.opacity = 0;
+                    setTimeout(() => messageContainer.remove(), 500);
+                  }, 4000);
+                }
+              });
+            </script>
+    
+            <style>
+              .alert {
+                padding: 10px 20px;
+                margin: 20px auto;
+                width: fit-content;
+                border-radius: 6px;
+                font-weight: bold;
+                font-family: sans-serif;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+              }
+              .alert.success { background-color: #d4edda; color: #155724; }
+              .alert.info    { background-color: #d1ecf1; color: #0c5460; }
+              .alert.warning { background-color: #fff3cd; color: #856404; }
+              .alert.error   { background-color: #f8d7da; color: #721c24; }
+            </style>
+        {% endif %}
+    
+        
+        <section id="home" class="home">
+
+            <!-- home heading & text  -->
+            <h1 class="banner">GET MALI AT YOUR DOOR STEP!</h1>
+            <h2 class="slogan"></h2>
+    
+            <!-- home btn  -->
+            <!-- <a href="#"><button></button></a> -->
+        </section>
+        <section id="about" class="about">
+    
+            <!-- about heading  -->
+            <h1 class="heading">About us</h1>
+    
+            <div class="row">
+                <!-- about heading & text  -->
+                <div class="content">
+                    <h2>We help you with your Garden Maintenance  </h2>
+                    <p>At Maali, we specialize in providing top-notch gardening and landscaping services to help you create and maintain the perfect outdoor space. Whether it’s routine maintenance, planting, pruning, or designing a completely new garden, our skilled team is committed to bringing your vision to life.</p>
+                <p>We believe a well-kept garden adds beauty, peace, and value to your home or business. With a passion for plants and a focus on sustainability, we ensure your garden remains healthy and vibrant throughout the year.</p>
+                <p>Let us handle the hard work so you can relax and enjoy the natural beauty of your garden. Your satisfaction is our priority, and we’re here to make gardening stress-free and rewarding.</p>
+            
+                </div>
+    
+                <!-- about images  -->
+                <div class="images">
+                    <img src="static/images/rb_83179.png"  alt="" style= "width:700px; height:500px;" >
+                </div>
+            </div>
+        </section>
+        <section id="team" class="team">
+            <section id="team" class="team">
+            <!-- team heading  -->
+            <h1 class="heading">OUR SERVICES</h1>
+            <p class="services-description">
+                We provide comprehensive gardening solutions, from basic maintenance to advanced landscaping, 
+                ensuring your garden stays beautiful and healthy all year round.
+            </p>
+                <div class="services-container">
+                <!-- card start  -->
+                <div class="card">
+                    <img src="static/images/planting-tree.jpg" alt="Tree Pruning Service">
+                    <h2>Planting</h2>
+                    <p>Professional forester planting your favorite plants.</p>
+                    <p><strong>Price:</strong> $50 per session</p>
+    
+                        
+                </div>
+                
+                <!-- card end  -->
+                <!-- card start  -->
+                <div class="card">
+                    <!-- card images  -->
+                    
+                        <img src="static/images/tree_trimming_and_tree_pruning.jpg" alt="pruning service">
+                    
+                        <h2>Tree Pruning</h2>
+                        <p>Trimming trees to maintain health and beauty.</p>
+                        <p><strong>Price:</strong> $40 per tree</p>
+                    
+                </div>
+                <!-- card end  -->
+                 <!-- card start  -->
+                 <div class="card">
+                        <img src="static/images/fertilising.jpg" alt="">
+                        <h2>Fertilising</h2>
+                        <p>Providing essential nutrients for healthy growth.</p>
+                        <p><strong>Price:</strong> $30 per application</p>
+                    
+                </div>
+                <!-- card end  -->
+                 <!-- card start  -->
+                 <div class="card">
+                   
+                        <img src="static/images/watering.webp" alt="">
+                    
+                        <h2>Watering</h2>
+                        <p>Regular watering to keep plants hydrated.</p>
+                        <p><strong>Price:</strong> $25 per visit</p>
+                   
+                </div>
+                <!-- card end  -->
+                <!-- card start  -->
+                <div class="card">
+                    <!-- card images  -->
+                    
+                        <img src="static/images/lawn maintenance.jpeg" alt="">
+                    
+                        <h2>Lawn Care</h2>
+                        <p>Mowing, aeration, and maintenance for a lush lawn.</p>
+                        <p><strong>Price:</strong> $60 per session</p>
+                </div>
+    
+                <div class="card">
+                    <!-- card images  -->
+                    
+                        <img src="static/images/beutification.jpg" alt="">
+                    
+                        <h2>Garden Beautification</h2>
+                        <p>Enhancing the aesthetics of your garden with design elements.</p>
+                        <p><strong>Price:</strong> $100 per project</p>
+                </div>
+    
+                <div class="card">
+                    <!-- card images  -->
+                    
+                        <img src="static/images/landscaping1.jpg" alt="">
+                    
+                        <h2>Landscaping</h2>
+                        <p>Complete garden transformation with professional landscaping.</p>
+                        <p><strong>Price:</strong> $200 per project</p>
+                </div>
+            </div>
+    
+    
+                <!-- card end  -->
+                <!-- card start  -->
+                <!-- <div class="card"> -->
+                    <!-- card images  -->
+                    <!-- <div class="images">
+                        <img src="#" alt="">
+                    </div> -->
+                    <!-- card info  -->
+                    <!-- <div class="info">
+                        <h2>Garden Setup</h2>
+                        <p>professional forester</p> -->
+    
+                        <!-- card icons  -->
+                        
+                    <!-- </div>
+                </div> -->
+                <!-- card end  -->
+                 <!-- card start 
+                <div class="card"> -->
+                    <!-- card images  -->
+                    <!-- <div class="images">
+                        <img src="#" alt="">
+                    </div> -->
+                    <!-- card info  -->
+                    <!-- <div class="info">
+                        <h2>indoor plants care </h2>
+                        <p>professional forester</p>
+    
+                        
+                        
+                    </div>
+                </div> -->
+                <!-- card end  -->
+            </section>
+        </section>
+        
+            <section id="faq" class="faq">
+                <h1 class="heading">Frequently Asked Questions</h1>
+                <div class="faq-container">
+                    <!-- <img src="faq.jpg" alt="FAQ Image" class="faq-image"> Image  -->
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item">
+                        <h2 class="faq-question">1. What services do you provide?</h2>
+                        <p class="faq-answer">We offer a wide range of services including lawn care, planting, pruning, pest control, irrigation system setup, and customized landscaping solutions.</p>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item">
+                        <h2 class="faq-question">2. How do I book a service?</h2>
+                        <p class="faq-answer">You can book a service directly through our website or by calling us. Visit the "Book Service" section and fill the form.</p>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item">
+                        <h2 class="faq-question">3. Do you offer packages?</h2>
+                        <p class="faq-answer">Yes, we have flexible packages including daily, weekly, monthly, and yearly plans. Check the "Packages" section for more details.</p>
+                    </div>
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item">
+                        <h2 class="faq-question">4. Are your services eco-friendly?</h2>
+                        <p class="faq-answer">Absolutely! We use eco-friendly products and sustainable gardening practices to ensure a healthy environment.</p>
+                    </div>
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item">
+                        <h2 class="faq-question">5. Do you provide customized solutions?</h2>
+                        <p class="faq-answer">Yes, we tailor our services based on your garden's specific needs and your preferences. Contact us for a personalized plan.</p>
+                    </div>
+                </div>
+            </section>
+            
+            
+    </body>
+    </html>
+    
+            
+    

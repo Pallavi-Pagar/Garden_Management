@@ -1,0 +1,140 @@
+
+
+<!-- ✅ Message display block -->
+{% if messages %}
+<div id="message-container">
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const messageContainer = document.getElementById("message-container");
+    if (messageContainer) {
+      setTimeout(() => {
+        messageContainer.style.transition = "opacity 0.5s ease-out";
+        messageContainer.style.opacity = 0;
+        setTimeout(() => messageContainer.remove(), 500);
+      }, 4000);
+    }
+  });
+</script>
+
+<style>
+  .alert {
+    padding: 10px 20px;
+    margin: 20px auto;
+    width: fit-content;
+    border-radius: 6px;
+    font-weight: bold;
+    font-family: sans-serif;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .alert.success { background-color: #d4edda; color: #155724; }
+  .alert.info    { background-color: #d1ecf1; color: #0c5460; }
+  .alert.warning { background-color: #fff3cd; color: #856404; }
+  .alert.error   { background-color: #f8d7da; color: #721c24; }
+</style>
+{% endif %}
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+        <title>Contact Us page</title>
+        <link rel="stylesheet" type="text/css" href="static/contact.css">
+        <script src="https://maps.googleapis.com/maps/api/js?keyAIzaSyDfjBQyz2xR1O92GvQ3uB48TeHP8jIzB0g&callback=initMap" async defer></script>
+    <script>
+        // Initialize the map function
+        function initMap() {
+            // Coordinates of the location 
+            const location = { lat: 18.504425, lng: 73.817194 }; 
+
+            // Create the map
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 14,
+                center: location,
+            });
+
+            //  marker at the location
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                title: "Our Location",
+            });
+        }
+    </script>
+    </head>
+    <body>
+        <section class="contact">
+            <div class="content">
+                <h2>Contact Us</h2>
+                <!-- <p>lyvcutkkbityu hcqwcb lqgcljb cv icgri    gry.</p> -->
+            </div>
+            <div class="container">
+                <div class="contactInfo">
+                    
+                    <div class="box">
+                        <div class="icon"><i class='bx bxs-envelope' ></i></div>
+                        <div class="text">
+                            <h3>Email ID:</h3>
+                            <p><a href="mailto:greencare12@gmail.com">greencare12@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="icon"><i class='bx bxs-phone' ></i></div>
+                        <div class="text">
+                            <h3>Call Us:</h3>
+                            <p><a href="tel:+917624752162">+91 7624752162</a></p>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="icon"><i class='bx bxs-map' ></i></div>
+                        <div class="text">
+                            <h3> Our Address:</h3>
+                            <p>Mayur Colony,<br>Kothrud,Pune,<br>445531</p>   
+                            <div id="map" style="width: 200%; height: 150px; margin-top: 10px;"></div>         
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="contactForm">
+                    <form method="post" action="/contact">
+                    {% csrf_token %}
+                        <h2>Send Message</h2>
+                        <div class="inputBox">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name"  >
+                           
+                        </div>
+                        <div class="inputBox">
+                            <label for="email">Email</label> 
+                            <input type="email" id="email" name= "email" value=""  >   
+                        </div>
+                        <div class="inputBox">
+                            <label for="phone">Mobile No.</label>
+                            <input type="phone" id="phone" required="required" name= "phone"  maxlength="10"  value="" >
+                        </div>
+                        
+                        <div class="inputBox">
+                            <label for="message">Suggestion/Query/Complaint</label>
+                            <textarea required="required" name="suggestion" placeholder="Enter your message here"></textarea>
+                          
+                        </div>
+                        <button type="submit" class="btn-submit" >Submit</button>
+                        <!-- <div class="inputBox"> -->
+                            <!-- <input type="submit" name="" value="Send"> -->
+                        </form>
+                        <form action="/user_index" method="POST" class="form">
+                            {% csrf_token %}
+                        <!-- <input type="hidden" name="booking_id" value="<//?php echo mysqli_insert_id($con); ?>"> -->
+                            <button type="submit" name="submit" class="btn-submit" id="btn1" >Back</button><br>
+                            </form> 
+                    </div>
+                </div>
+            </section>
+        </body>
+    </html>

@@ -1,0 +1,102 @@
+{% comment %} <?php
+session_start();
+include('db.php');
+
+if (!isset($_SESSION['email'])) {
+    header('Location: login1.php');
+    exit();
+}
+
+$user_id = $_SESSION['id'];
+$name = $_POST['name'];
+$email = $_POST['email'];
+$phone = $_POST['phone'];
+$address1 = $_POST['address1'];
+$address2 = $_POST['address2'];
+$area = $_POST['area'];
+$service = $_POST['service'];
+$plants = $_POST['plants'];
+
+// Calculate total rates (example: $50 per plant)
+$rate_per_plant = 50;
+$total_cost = $plants * $rate_per_plant;
+
+// Save booking to database
+$query = "INSERT INTO booked_services (user_id, name, email, phone,address1,address2, area, service, plants, total_cost)
+          VALUES ('$user_id', '$name', '$email', '$phone','$address1','$address2', '$area', '$service', '$plants', '$total_cost')";
+mysqli_query($con, $query);
+
+// Generate report
+?> {% endcomment %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Report</title>
+    <!-- <link rel="stylesheet" href="style1.css"> -->
+</head>
+<body><div class="container1">
+    <div class="content1">
+    <h1><center>Booking Report</center></h1>
+    <p><strong>Name:</strong> </p>
+    <p><strong>Email:</strong> </p>
+    <p><strong>Phone:</strong> </p>
+    <p><strong>Address:</strong> </p>
+    <p><strong></strong> </p>
+    
+    <p><strong>Area:</strong> </p>
+    <p><strong>Service:</strong></p>
+    <p><strong>Number of Plants:</strong> </p>
+    <p><strong>Total Cost:</strong> </p>
+   
+    </div>
+   
+    <form action="#" method="post" class="form1">
+    <input type="hidden" name="booking_id" value="">
+    <button type="submit" onclick="payment.php" class="btn-submit">Pay</button>
+</form>
+<form action="book_service.php" method="post" class="form1">
+    <input type="hidden" name="booking_id" value="">
+    <button type="submit" onclick="payment.php" class="btn-submit">back</button>
+</form>
+</div>
+</body>
+</html>
+
+
+<style>
+
+body{
+    background: url(plant2.jpg);
+}
+.container1{
+    align-content: center;
+    max-width: 500px;
+    margin-top: 50px;
+    margin-left: 500px;
+    width:100%;
+    position: absolute;
+    border:2px solid black;
+    background-color: white;
+    border-radius: 5px ;
+}
+
+.content1{
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+.btn-submit{
+    margin-top: 10px;
+    width:100%;
+    height:40px;
+    border-radius: 6px;
+    color:black;
+    border: 2px solid #013220;
+    cursor: pointer;
+    transition: all .3s ease;
+    background-color: lightgreen;
+}
+.btn-submit:hover {
+      background: var(--light-green);
+}
+</style>

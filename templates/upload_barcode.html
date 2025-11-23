@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Eat Smart - Upload Product</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fa;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+  }
+  .logo {
+    font-weight: bold;
+    font-size: 20px;
+    color: #2e7d32;
+  }
+  .buttons {
+    display: flex;
+    gap: 10px;
+  }
+  button, .btn {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  button.outline, .btn.outline {
+    background-color: transparent;
+    color: #2e7d32;
+    border: 2px solid #2e7d32;
+  }
+  button.outline:hover, .btn.outline:hover {
+    background-color: #2e7d32;
+    color: white;
+  }
+  
+  #choose_img{
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top:20px;
+    margin-left:220px;
+  }
+  main {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  h1 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  p.subtitle {
+    text-align: center;
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .upload-area {
+    margin-left: 20px;
+    margin-top: 30px;
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .upload-area input[type="file"] {
+    display: none;
+  }
+  .barcode-input {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .barcode-input input[type="text"] {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  .barcode-input button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: #2e7d32;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .barcode-input button:hover {
+    background-color: #276c2a;
+  }
+  .hint {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" aria-label="Eat Smart logo">
+    Eat Smart
+  </div>
+  <div class="buttons">
+    <button class="outline" type="button" aria-label="Login" >Login</button>
+    <button type="button" aria-label="Register">Register</button>
+  </div>
+</header>
+<main>
+  <h1>Scan or Upload Product</h1>
+  <p class="subtitle">Get instant detailed information about any food product</p>
+
+  <section class="card" aria-label="Upload product image">
+    <h2 style="text-align:center; font-weight:bold; margin-bottom: 16px;">Upload Product Image</h2>
+    <label for="productImage" class="upload-area" tabindex="0" role="button" aria-describedby="uploadDesc">
+      <div id="uploadDesc">Click to upload an image of the product</div>
+      <input type="file" id="productImage" name="productImage" accept="image/*" />
+      <button type="button" id="choose_img" style="background-color:#2e7d32; border:none; border-radius:6px; color:white; padding:8px 16px; cursor:pointer;">
+        Choose Image
+      </button>
+    </label>
+  </section>
+
+  <section class="card" aria-label="Enter barcode manually">
+    <h2 style="text-align:center; font-weight:bold; margin-bottom: 16px;">Enter Barcode Manually</h2>
+    <div class="barcode-input">
+      <input type="text" id="barcodeInput" name="barcodeInput" placeholder="Enter barcode number..." aria-label="Barcode number input" />
+      <button type="button" id="scanButton" aria-label="Scan barcode">Scan</button>
+    </div>
+    <p class="hint">Try entering: 123456789012 or 987654321098 for demo data</p>
+  </section>
+</main>
+<script>
+  const uploadArea = document.querySelector('.upload-area');
+  const fileInput = document.getElementById('productImage');
+
+  uploadArea.addEventListener('click', () => {
+    fileInput.click();
+  });
+  uploadArea.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+
+  document.getElementById('scanButton').addEventListener('click', () => {
+    const barcode = document.getElementById('barcodeInput').value.trim();
+    if (barcode) {
+      alert('Scanning barcode: ' + barcode);
+    } else {
+      alert('Please enter a barcode number to scan.');
+    }
+  });
+  const uploadArea = document.querySelector('.upload-area');
+  const fileInput = document.getElementById('productImage');
+
+  uploadArea.addEventListener('click', () => {
+    fileInput.click();
+  });
+  uploadArea.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+
+  // Scan button click handler
+  document.getElementById('scanButton').addEventListener('click', () => {
+    const barcode = document.getElementById('barcodeInput').value.trim();
+    if (barcode) {
+      alert('Scanning barcode: ' + barcode);
+      // Here you can add actual scanning or lookup logic
+    } else {
+      alert('Please enter a barcode number to scan.');
+    }
+  });
+</script>
+</body>
+</html>

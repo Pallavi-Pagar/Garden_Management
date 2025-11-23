@@ -1,0 +1,266 @@
+{% comment %} <?php
+    session_start();
+    include("db.php");
+   
+    if($_SERVER["REQUEST_METHOD"]=="POST")
+    {
+    $name=$_POST['name'];
+    $email=$_POST['email'];
+    $phone=$_POST['phone'];
+    $password=$_POST['password'];
+    // $confirm_password=$_POST['confirm_password'];
+
+    // / /Check if email already exists
+    $query = "SELECT * FROM registration WHERE email = '$email'";
+    $result = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        echo "<script>
+            alert('Email already exists. Please use a different email.');
+            window.location.href = 'register.php'; // Redirect back to registration form
+        </script>";
+    } else {
+        // Insert user into the database
+        $query = "INSERT INTO registration (name, email, phone, password) VALUES ('$name', '$email', '$phone', '$password')";
+        if (mysqli_query($con, $query)) {
+            echo "<script>
+                alert('Registration successful! Please login.');
+                window.location.href = 'login.php'; // Redirect to login page
+            </script>";
+        } else {
+            echo "<script>
+                alert('Registration failed. Please try again later.');
+                window.location.href = 'register.php'; // Redirect back to registration form
+            </script>";
+        }
+    }
+}
+?> {% endcomment %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="static/register_css.css">
+    <title>Register Form</title>
+</head>
+<body>
+
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <center><h4 style = color: ;>{{message}}</h4></center>
+                {% else %}
+                    <center><h4 style="color: dodgerblue;">{{message}}</h4></center>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+
+
+        <form action="/register" class="register active" method="POST">
+        {% csrf_token %}
+        
+    <!-- ✅ Message display block -->
+    {% if messages %}
+    <div id="message-container">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const messageContainer = document.getElementById("message-container");
+        if (messageContainer) {
+          setTimeout(() => {
+            messageContainer.style.transition = "opacity 0.5s ease-out";
+            messageContainer.style.opacity = 0;
+            setTimeout(() => messageContainer.remove(), 500);
+          }, 4000);
+        }
+      });
+    </script>
+
+    <style>
+      .alert {
+        padding: 10px 20px;
+        margin: 20px auto;
+        width: fit-content;
+        border-radius: 6px;
+        font-weight: bold;
+        font-family: sans-serif;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .alert.success { background-color: #d4edda; color: #155724; }
+      .alert.info    { background-color: #d1ecf1; color: #0c5460; }
+      .alert.warning { background-color: #fff3cd; color: #856404; }
+      .alert.error   { background-color: #f8d7da; color: #721c24; }
+    </style>
+{% endif %}
+            <form>
+            <h2 class="title">Register with your account</h2>
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <div class="input-group">
+                    <input type="text"  required name="first_name">
+                    <i class='bx bx-user'></i>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <div class="input-group">
+                    <input type="text"  required name="last_name">
+                    <i class='bx bx-user'></i>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Username">Username </label>
+                <div class="input-group">
+                    <input type="text"  required name="Username">
+                    <i class='bx bx-user'></i>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <input type="email" required name="email">
+                    <i class='bx bx-envelope'></i>
+                </div>
+            </div>
+            {% comment %} <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <div class="input-group">
+                    <input type="tel" id="phone" placeholder="+91" name=phone required>
+                    <i class='bx bx-phone'></i>
+                </div>
+            </div> {% endcomment %}
+            <!-- <div class="form-group">
+                <label for="address">Address</label>
+                <div class="input-group">
+                    <input type="text" id="address" placeholder="Building name/Area/Road/">
+                    <i class='bx bx-map'></i>
+                </div>
+                <span class="help-text">Enter detailed address.</span>
+            </div> -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <i id="icon" class='bx bx-lock-alt'></i>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
+                    {% comment %} <ul id="password-rules" class="hidden">
+                        <li id="eightcharacters">Contain 8 characters</li>
+                        <li id="lowercase">Contain lowercase characters</li>
+                        <li id="uppercase">Contain uppercase characters</li>
+                        <li id="numbers">Contain numbers</li>
+                        <li id="special">Contain special characters</li>
+                        </ul>
+                        <p id="password-valid-message" class="hidden">Password is valid</p> {% endcomment %}
+                </div>
+                
+            </div>
+            <button type="submit" class="btn-submit">Register</button>
+            <p>Already have an account? <a href= "/login/">Login</a></p>
+        </form>
+    </div>
+    <script>
+        var password= document.getElementById('password');
+        var rules=document.getElementById('password-rules');
+        var validMessage = document.getElementById('password-valid-message');
+        var eightcharacters= document.getElementById('eightcharacters');
+        var lowercase= document.getElementById('lowercase');
+        var uppercase= document.getElementById('uppercase');
+        var numbers= document.getElementById('numbers');
+        var special= document.getElementById('special');
+
+        password.oninput=()=>{
+            var userpassword=password.value;
+
+            if(userpassword.length>0){
+                rules.classList.remove('hidden');
+                rules.classList.add('visible');
+                validMessage.classList.add('hidden');
+                icon.classList.remove('icon-visible');
+                icon.classList.add('icon-hidden');
+            }else{
+                rules.classList.remove('visible');
+                rules.classList.add('hidden');   
+                validMessage.classList.add('hidden');
+                icon.classList.add('icon-visible');
+                 icon.classList.remove('icon-hidden');
+            }
+
+                //check lowercase
+            var pattern=/[a-z]/g;
+            if(userpassword.match(pattern)){
+                lowercase.classList.add('valid');
+                lowercase.classList.remove('invalid');
+            }else{
+                lowercase.classList.remove('valid');
+                lowercase.classList.add('invalid');
+            }
+            
+            
+                //check uppercase
+            var pattern=/[A-Z]/g;
+            if(userpassword.match(pattern)){
+                uppercase.classList.add('valid');
+                uppercase.classList.remove('invalid');
+            }else{
+                uppercase.classList.remove('valid');
+                uppercase.classList.add('invalid');
+            }
+            // numbers
+            var pattern=/[0-9]/g;
+            if(userpassword.match(pattern)){
+                numbers.classList.add('valid');
+                numbers.classList.remove('invalid');
+            }else{
+                numbers.classList.remove('valid');
+                numbers.classList.add('invalid');
+            }
+            //length
+            
+            if(userpassword.length>=8){
+                eightcharacters.classList.add('valid');
+                eightcharacters.classList.remove('invalid');
+            }else{
+                eightcharacters.classList.remove('valid');
+                eightcharacters.classList.add('invalid');
+            }
+
+            //special
+            var pattern=/[!@#$%^&*(),.?":{}|<>]+/;
+            if(userpassword.match(pattern)){
+                special.classList.add('valid');
+                special.classList.remove('invalid');
+            }else{
+                special.classList.remove('valid');
+                special.classList.add('invalid');
+            }
+            if (
+                eightcharacters.classList.contains('valid') &&
+                lowercase.classList.contains('valid') &&
+                uppercase.classList.contains('valid') &&
+                numbers.classList.contains('valid') &&
+                special.classList.contains('valid')
+             ) {
+                rules.classList.remove('visible');
+                rules.classList.add('hidden');
+                validMessage.classList.remove('hidden');
+                validMessage.classList.add('visible');
+                icon.classList.add('icon-visible');
+                icon.classList.remove('icon-hidden');
+            } else {
+                validMessage.classList.remove('visible');
+                validMessage.classList.add('hidden');
+    }
+};
+    </script>
+</body>
+</html>

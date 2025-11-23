@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <!-- Boxicons for back icon -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        /* Back button styling */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            background: rgb(7, 184, 7);
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background: #14a10d;
+        }
+
+        /* Container styling */
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Table styling for cart items */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            height: 60px;
+            width: 60px;
+            object-fit: cover;
+        }
+
+        /* Total price display */
+        .total {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        /* Button styling */
+        .btn {
+            background: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: darkgreen;
+        }
+
+        /* Input field for quantity */
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Back to homepage link -->
+<a href="/shop_plant" class="back-button"><i class='bx bx-arrow-back'></i> Back</a>
+
+<div class="container">
+    <h2>Your Shopping Cart</h2>
+
+    {% if cart_items %}
+        <!-- Form to update cart quantities -->
+        <form method="post" action="/cart">
+            {% csrf_token %} <!-- Django security token -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Plant</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        {% comment %} <th>Action</th> {% endcomment %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <!-- Show plant image -->
+                        <td><img src="{{ item.plant.image.url }}" alt="Plant"></td>
+
+                        <!-- Plant name -->
+                        <td>{{ item.plant.name }}</td>
+
+                        <!-- Plant price -->
+                        <td>${{ item.plant.price }}</td>
+
+                        <!-- Input to update quantity -->
+                        <td>
+                            <input type="number" name="quantity_{{ item.id }}" value="{{ item.quantity }}" min="1" class="quantity-input">
+                        </td>
+
+                        <!-- Subtotal price -->
+                        <td>${{ item.subtotal }}</td>
+
+                        <!-- Remove item from cart -->
+                          
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Display total cost -->
+            <div class="total">Total: {{ total }}</div>
+
+            <!-- Buttons for updating cart and checkout -->
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                {% comment %} <button type="submit" class="btn">Update Cart</button> {% endcomment %}
+                <a href="/checkout" class="btn">Checkout</a>
+                <a href="{% url 'clear_cart' %}" class="btn" style="background: tomato;">Clear Cart</a>
+
+            </div>
+        </form>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+{% comment %} {% url 'remove_from_cart' item.id %} {% endcomment %}

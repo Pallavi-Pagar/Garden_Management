@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ plant.name }} - Details</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f4f4;
+            padding: 40px;
+        }
+        .card {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+        .price {
+            font-size: 20px;
+            color: green;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 5px 0 0;
+            border: none;
+            border-radius: 5px;
+            background: green;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn.buy {
+            background: #ff6347;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <img src="{{ plant.image.url }}" alt="{{ plant.name }}">
+    <h2>{{ plant.name }}</h2>
+    <p><strong>Type:</strong> {{ plant.type.t_name }}</p>
+    <p class="price">$ {{ plant.price }}</p>
+    <p><strong>Description:</strong> {{ plant.description }}</p>
+
+    <!-- Add to Cart Form -->
+    <form method="POST" action="{% url 'add_to_cart' %}">
+        {% csrf_token %}
+        <input type="hidden" name="plant_id" value="{{ plant.id }}">
+        <button type="submit" class="btn">Add to Cart</button>
+    </form>
+
+    <!-- Buy Now -->
+    <form method="POST" action="{% url 'checkout' %}">
+        {% csrf_token %}
+        <input type="hidden" name="plant_id" value="{{ plant.id }}">
+        <button type="submit" class="btn buy">Buy Now</button>
+    </form>
+</div>
+
+</body>
+</html>

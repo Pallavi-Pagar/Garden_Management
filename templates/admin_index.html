@@ -1,0 +1,639 @@
+{% comment %} {% load static %} {% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="static/home1 (1).css ">
+    
+   
+    <title>Gardening Services</title>
+</head>
+<body>
+    <header class="header">
+         <!-- logo name  -->
+         <a href="#" class="logo"><i class="fas fa-tree"></i>MALI!</a>
+         <h2 >Welcome  Admin</h2>
+        
+
+         <!-- navbar icons  -->
+         <!-- <div class="fas fa-bars"></div> -->
+         <!-- navbar link  -->
+         <nav class="navbar">
+             <ul>
+                <li><a href="#home">Home</a></li>
+                 
+                <li><a href="#team">Services</a></li>
+                <li><a href="/book_service">Book service </a></li>
+                {% comment %} <li><a href="/login">Login </a></li> {% endcomment %}
+                {% comment %} <li><a href="/contact"  >Contact us</a></li> {% endcomment %}
+                {% comment %} <li><a href="#packages">Packages</a></li> {% endcomment %}
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="/add_plant">Add Plants</a></li>
+
+                <li><a href='/logout'>Logout</a></li>
+            
+             </ul>
+         </nav>
+     </header>
+         <!-- home section start  -->
+
+         
+         {% comment %} Additional options ssection {% endcomment %}
+    <section class="additional-options">
+        <ul>
+            
+            <li><a href="#team">Services</a></li>
+            <li><a href="/shop_plant">Shop Plant</a></li>
+            <!-- <li><a href="customize_garden.html">Customize Garden</a></li> -->
+        </ul>
+        </section>
+        <header class="header">
+            <!-- logo and navbar already present -->
+        </header>
+    
+        <!-- ✅ Message display block -->
+        {% if messages %}
+            <div id="message-container">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+    
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                const messageContainer = document.getElementById("message-container");
+                if (messageContainer) {
+                  setTimeout(() => {
+                    messageContainer.style.transition = "opacity 0.5s ease-out";
+                    messageContainer.style.opacity = 0;
+                    setTimeout(() => messageContainer.remove(), 500);
+                  }, 4000);
+                }
+              });
+            </script>
+    
+            <style>
+              .alert {
+                padding: 10px 20px;
+                margin: 20px auto;
+                width: fit-content;
+                border-radius: 6px;
+                font-weight: bold;
+                font-family: sans-serif;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+              }
+              .alert.success { background-color: #d4edda; color: #155724; }
+              .alert.info    { background-color: #d1ecf1; color: #0c5460; }
+              .alert.warning { background-color: #fff3cd; color: #856404; }
+              .alert.error   { background-color: #f8d7da; color: #721c24; }
+            </style>
+        {% endif %}
+    
+        
+        <section id="home" class="home">
+
+            <!-- home heading & text  -->
+            <h1 class="banner">GET MALI AT YOUR DOOR STEP!</h1>
+            <h2 class="slogan"></h2>
+    
+            <!-- home btn  -->
+            <!-- <a href="#"><button></button></a> -->
+        </section>
+        <section id="about" class="about">
+    
+            <!-- about heading  -->
+            <h1 class="heading">About us</h1>
+    
+            <div class="row">
+                <!-- about heading & text  -->
+                <div class="content">
+                    <h2>We help you with your Garden Maintenance  </h2>
+                    <p>At Maali, we specialize in providing top-notch gardening and landscaping services to help you create and maintain the perfect outdoor space. Whether it’s routine maintenance, planting, pruning, or designing a completely new garden, our skilled team is committed to bringing your vision to life.</p>
+                <p>We believe a well-kept garden adds beauty, peace, and value to your home or business. With a passion for plants and a focus on sustainability, we ensure your garden remains healthy and vibrant throughout the year.</p>
+                <p>Let us handle the hard work so you can relax and enjoy the natural beauty of your garden. Your satisfaction is our priority, and we’re here to make gardening stress-free and rewarding.</p>
+            
+                </div>
+    
+                <!-- about images  -->
+                <div class="images">
+                    <img src="static/images/rb_83179.png"  alt="" style= "width:700px; height:500px;" >
+                </div>
+            </div>
+        </section>
+        <section id="team" class="team">
+            <section id="team" class="team">
+            <!-- team heading  -->
+            <h1 class="heading">OUR SERVICES</h1>
+            <p class="services-description">
+                We provide comprehensive gardening solutions, from basic maintenance to advanced landscaping, 
+                ensuring your garden stays beautiful and healthy all year round.
+            </p>
+                <div class="services-container">
+                <!-- card start  -->
+                <div class="card">
+                    <img src="static/images/planting-tree.jpg" alt="Tree Pruning Service">
+                    <h2>Planting</h2>
+                    <p>Professional forester planting your favorite plants.</p>
+                    <p><strong>Price:</strong> $50 per session</p>
+    
+                        
+                </div>
+                
+                <!-- card end  -->
+                <!-- card start  -->
+                <div class="card">
+                    <!-- card images  -->
+                    
+                        <img src="static/images/tree_trimming_and_tree_pruning.jpg" alt="pruning service">
+                    
+                        <h2>Tree Pruning</h2>
+                        <p>Trimming trees to maintain health and beauty.</p>
+                        <p><strong>Price:</strong> $40 per tree</p>
+                    
+                </div>
+                <!-- card end  -->
+                 <!-- card start  -->
+                 <div class="card">
+                        <img src="static/images/fertilising.jpg" alt="">
+                        <h2>Fertilising</h2>
+                        <p>Providing essential nutrients for healthy growth.</p>
+                        <p><strong>Price:</strong> $30 per application</p>
+                    
+                </div>
+                <!-- card end  -->
+                 <!-- card start  -->
+                 <div class="card">
+                   
+                        <img src="static/images/watering.webp" alt="">
+                    
+                        <h2>Watering</h2>
+                        <p>Regular watering to keep plants hydrated.</p>
+                        <p><strong>Price:</strong> $25 per visit</p>
+                   
+                </div>
+                <!-- card end  -->
+                <!-- card start  -->
+                <div class="card">
+                    <!-- card images  -->
+                    
+                        <img src="static/images/lawn maintenance.jpeg" alt="">
+                    
+                        <h2>Lawn Care</h2>
+                        <p>Mowing, aeration, and maintenance for a lush lawn.</p>
+                        <p><strong>Price:</strong> $60 per session</p>
+                </div>
+    
+                <div class="card">
+                    <!-- card images  -->
+                    
+                        <img src="static/images/beutification.jpg" alt="">
+                    
+                        <h2>Garden Beautification</h2>
+                        <p>Enhancing the aesthetics of your garden with design elements.</p>
+                        <p><strong>Price:</strong> $100 per project</p>
+                </div>
+    
+                <div class="card">
+                    <!-- card images  -->
+                    
+                        <img src="static/images/landscaping1.jpg" alt="">
+                    
+                        <h2>Landscaping</h2>
+                        <p>Complete garden transformation with professional landscaping.</p>
+                        <p><strong>Price:</strong> $200 per project</p>
+                </div>
+            </div>
+    
+    
+                <!-- card end  -->
+                <!-- card start  -->
+                <!-- <div class="card"> -->
+                    <!-- card images  -->
+                    <!-- <div class="images">
+                        <img src="#" alt="">
+                    </div> -->
+                    <!-- card info  -->
+                    <!-- <div class="info">
+                        <h2>Garden Setup</h2>
+                        <p>professional forester</p> -->
+    
+                        <!-- card icons  -->
+                        
+                    <!-- </div>
+                </div> -->
+                <!-- card end  -->
+                 <!-- card start 
+                <div class="card"> -->
+                    <!-- card images  -->
+                    <!-- <div class="images">
+                        <img src="#" alt="">
+                    </div> -->
+                    <!-- card info  -->
+                    <!-- <div class="info">
+                        <h2>indoor plants care </h2>
+                        <p>professional forester</p>
+    
+                        
+                        
+                    </div>
+                </div> -->
+                <!-- card end  -->
+            </section>
+        </section>
+        
+            <section id="faq" class="faq">
+                <h1 class="heading">Frequently Asked Questions</h1>
+                <div class="faq-container">
+                    <!-- <img src="faq.jpg" alt="FAQ Image" class="faq-image"> Image  -->
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item">
+                        <h2 class="faq-question">1. What services do you provide?</h2>
+                        <p class="faq-answer">We offer a wide range of services including lawn care, planting, pruning, pest control, irrigation system setup, and customized landscaping solutions.</p>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item">
+                        <h2 class="faq-question">2. How do I book a service?</h2>
+                        <p class="faq-answer">You can book a service directly through our website or by calling us. Visit the "Book Service" section and fill the form.</p>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item">
+                        <h2 class="faq-question">3. Do you offer packages?</h2>
+                        <p class="faq-answer">Yes, we have flexible packages including daily, weekly, monthly, and yearly plans. Check the "Packages" section for more details.</p>
+                    </div>
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item">
+                        <h2 class="faq-question">4. Are your services eco-friendly?</h2>
+                        <p class="faq-answer">Absolutely! We use eco-friendly products and sustainable gardening practices to ensure a healthy environment.</p>
+                    </div>
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item">
+                        <h2 class="faq-question">5. Do you provide customized solutions?</h2>
+                        <p class="faq-answer">Yes, we tailor our services based on your garden's specific needs and your preferences. Contact us for a personalized plan.</p>
+                    </div>
+                </div>
+            </section>
+            
+            
+    </body>
+    </html>
+  
+<style>
+    /* General styles */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    background: url(static/images/home.jpg);  /*background of get mali */
+    color: #333;
+}
+
+/* Header styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header .logo {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.header .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.header .navbar ul li {
+    display: inline;
+}
+
+.header .navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.header .navbar ul li a:hover {
+    background-color: #45a049;
+}
+
+/* Home Section */
+#home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    background: url('https://source.unsplash.com/1600x900/?garden') no-repeat center/cover;
+    color: white;
+    padding: 20px;
+    height: 300px;
+    position: relative;
+    /* margin: 0 auto; */
+}
+
+#home .banner {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#home .slogan {
+    font-size: 1.5rem;
+}
+
+/* About Section */
+#about {
+ padding: 50px 20px;
+    background-color: #fff; 
+    /* background-image: url(garden1.jpg);  */
+    /* background-position: center center; 
+    background-repeat: no-repeat;  */
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    text-align: center; 
+    flex-direction: column;
+}
+
+#about .heading {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4CAF50;
+}
+
+#about .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+#about .content {
+    flex: 1;
+    max-width: 500px;
+}
+#about .content h2 {
+    font-size: 2rem;
+    color: #2d6a4f;
+    margin-bottom: 15px;
+    text-align: center;
+    /* font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px; */
+}
+
+.about .content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center; 
+}
+#about .images img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+/* Team Section */
+#team {
+    padding: 50px 20px;
+    background-color: #f4f4f4;
+}
+
+#team .heading {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4CAF50;
+}
+.services-description {
+    text-align: center; /* Centers the text */
+    max-width: 800px; /* Limits the paragraph width for readability */
+    margin: 10px auto 30px; /* Adds spacing above and below */
+    font-size: 1.1rem; /* Adjusts font size for clarity */
+    color: #555; /* Softens the color for better contrast */
+    line-height: 1.6; /* Adds space between lines */
+}
+.services-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    text-align: center;
+    width: 280px;  /* Consistent card size */
+    padding: 15px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    height: 180px; /* Fixed height to keep uniform */
+    object-fit: cover; /* Prevent stretching */
+    border-radius: 8px;
+}
+
+.card h2 {
+    color: #2c7a2c;
+    margin: 10px 0;
+    font-size: 20px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #555;
+}
+
+.card strong {
+    color: #000;
+}
+
+
+
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .header .navbar ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #about .row, #team .row {
+        flex-direction: column;
+    }
+
+    .top-packages, .bottom-packages {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+.faq {
+    background-color: #f7f7f7;
+    padding: 50px 20px;
+    background: url(faq1.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: rgb(17, 100, 50);
+    /* border-color: #14c859; */
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.faq-question {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #14c859;
+}
+
+.faq-answer {
+    font-size: 1rem;
+    margin-top: 10px;
+    color: #666;
+}
+/* .faq-image {
+    width: 50px; 
+    height: 50px;
+    object-fit: cover; 
+} */
+
+/* Styles for Additional Options Section */
+.additional-options {
+    background-color: #e0f2e9;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.additional-options ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.additional-options ul li {
+    display: inline;
+}
+
+.additional-options ul li a {
+    text-decoration: none;
+    color: #2d572c;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 15px;
+    background-color: #e0f2e9;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.additional-options ul li a:hover {
+    background-color: #2d572c;
+    color: white;
+}
+/* Style for Book Service Button */
+.book-service-btn {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.book-service-btn .btn {
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    padding: 15px 25px;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.book-service-btn .btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+.services {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.service-card {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.service-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.service-card button {
+    margin-top: 10px;
+    background: green;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.service-card button:hover {
+    background: darkgreen;
+}
+
+</style>

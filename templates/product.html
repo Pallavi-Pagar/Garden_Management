@@ -1,0 +1,298 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Include FontAwesome for icons -->
+    <style>
+        /* Basic styling for layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e9f1e4e0;
+        }
+
+        /* Navbar style */
+        .navbar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Button and link styles in navbar */
+        .navbar button, .navbar a {
+            color: white;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Search bar style */
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container input {
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Cart icon and cart count */
+        .cart-container {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Product section */
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        /* Styling individual product cards */
+        .product-card {
+            background-color: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 200px;
+        }
+
+        /* Product image styling */
+        .product-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        /* Product name style */
+        .product-name {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        /* Button styling */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Cart Popup styling */
+        .cart-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .cart-popup button {
+            margin-top: 10px;
+            background-color: #FF6347;
+        }
+    </style>
+</head>
+<body>
+<!-- ✅ Message display block -->
+{% if messages %}
+<div id="message-container">
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const messageContainer = document.getElementById("message-container");
+    if (messageContainer) {
+      setTimeout(() => {
+        messageContainer.style.transition = "opacity 0.5s ease-out";
+        messageContainer.style.opacity = 0;
+        setTimeout(() => messageContainer.remove(), 500);
+      }, 4000);
+    }
+  });
+</script>
+
+<style>
+  .alert {
+    padding: 10px 20px;
+    margin: 20px auto;
+    width: fit-content;
+    border-radius: 6px;
+    font-weight: bold;
+    font-family: sans-serif;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .alert.success { background-color: #d4edda; color: #155724; }
+  .alert.info    { background-color: #d1ecf1; color: #0c5460; }
+  .alert.warning { background-color: #fff3cd; color: #856404; }
+  .alert.error   { background-color: #f8d7da; color: #721c24; }
+</style>
+{% endif %}
+
+    <!-- Navbar Section -->
+    <nav class="navbar">
+        <!-- Back button with icon -->
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        
+        <!-- Home button -->
+        <a href="/user_index" class="home-btn">Home</a>
+
+        <!-- Search bar with search icon -->
+        <form method="GET" action="">
+            <input style="width:250px; height:30px; border-radius:5px;" type="text" name="q" placeholder="Search plants..." value="{{ request.GET.q }}">
+            <button type="submit">Search</button>
+        </form>
+        
+
+        <!-- Cart icon with item count (No text 'Cart') -->
+        <div class="cart-container">
+            <a href="{% url 'view_cart' %}" class="cart-btn">
+                <!-- Only cart icon with count -->
+                <i class="fas fa-shopping-cart"></i> <span id="cart-count">{{cart_count}}</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Products Section -->
+    <section class="products">
+        {% comment %} <p>{{ p.image.url }}</p> {% endcomment %}
+        <!-- Product 1 -->
+        {% comment %} <p>Total Plants: {{ plants|length }}</p>    {% endcomment %}
+        {% for p in plants %}
+        <div class="product-card">
+            {% if p.image %}
+        <img src="{{ p.image.url }}" alt="{{ p.name }}" style="width: 200px; height: auto;">
+        <p>{{ p.image.url }}</p>
+        {% else %}
+        <p>No image available.</p>
+        {% endif %}
+            <h3 class="product-name" >Name:{{ p.name }}</h3>
+            <p class="product-name">Price:{{ p.price }}</p>
+            <!-- <button class="view-details" onclick="viewDetails('plant1')">View Details</button> -->
+            <button class="view-details"  ><a href="{% url 'view_plant' p.id %}">View Details</a></button>
+
+            <form method="POST" action="{% url 'add_to_cart' %}">
+                {% csrf_token %}
+                <input type="hidden" name="plant_id" value="{{ p.id }}">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+            {%empty%}
+                <p>No plants found.</p>
+            {% endfor %} 
+
+        {% comment %} <!-- Product 2 -->
+        <div class="product-card">
+            <img src="hibiscus2.jpg" alt="Plant 2" class="product-img">
+            <h3 class="product-name">Red Hibiscus</h3>
+            <!-- <button class="view-details" onclick="viewDetails('plant2')">View Details</button> -->
+            <button class="view-details" onclick="window.location.href='shop.html?id=plant2'">View Details</button>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+            <img src="money.jpg" alt="Plant 3" class="product-img">
+            <h3 class="product-name">Money Plant</h3>
+            <button class="view-details" onclick="window.location.href='shop.html?id=plant3'">View Details</button>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+            <img src="neem.jpg" alt="Plant 4" class="product-img">
+            <h3 class="product-name">Neem Plant</h3>
+            <button class="view-details" onclick="window.location.href='shop.html?id=plant4'">View Details</button>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+            <img src="snakeplant.webp" alt="Plant 5" class="product-img">
+            <h3 class="product-name">Snake Plant</h3>
+            <button class="view-details" onclick="window.location.href='shop.html?id=plant5'">View Details</button>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card">
+            <img src="plant6.jpg" alt="Plant 6" class="product-img">
+            <h3 class="product-name">Money Tree</h3>
+            <button class="view-details" onclick="window.location.href='shop.html?id=plant6'">View Details</button>
+            <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+        </div>
+
+    </section> 
+{% comment %}  {% endcomment %}
+    <!-- Cart Popup (Displays when an item is added to the cart) -->
+    <div id="cart-popup" class="cart-popup">
+        <p>Item added to cart!</p>
+        <!-- Close the popup when clicked -->
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        // JavaScript code for cart and popup functionality
+
+        // Variable to keep track of the cart count
+        let cartCount = 0;
+
+        // Function to handle adding items to the cart
+        function addToCart() {
+            cartCount++; // Increment cart count
+            document.getElementById("cart-count").innerText = cartCount; // Update the cart count in the navbar
+            showPopup(); // Show the popup after adding to cart
+        }
+
+        // Function to show the popup when an item is added to the cart
+        function showPopup() {
+            const popup = document.getElementById("cart-popup");
+            popup.style.display = "block"; // Make the popup visible
+        }
+
+        // Function to close the popup
+        function closePopup() {
+            const popup = document.getElementById("cart-popup");
+            popup.style.display = "none"; // Hide the popup
+        }
+
+        // Function to redirect to product details page
+        function viewDetails(productId) {
+            // Redirect to product details page with the product ID
+            window.location.href = `product-details.html?id=${productId}`;
+        }
+    </script>
+
+</body>
+</html>

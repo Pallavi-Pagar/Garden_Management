@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Eat Smart - Login & Register</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #e9ecef;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 360px;
+    margin: 60px auto;
+    background: white;
+    padding: 20px 25px 30px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  h2 {
+    color: #2a7a2a;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    font-weight: bold;
+    color: #444;
+  }
+  .tab.active {
+    border: 1px solid #2a7a2a;
+    border-bottom: 1px solid white;
+    background-color: #d4edda;
+    color: #2a7a2a;
+  }
+  form {
+    display: none;
+  }
+  form.active {
+    display: block;
+  }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 14px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+  }
+  textarea {
+    resize: vertical;
+  }
+  button {
+    width: 100%;
+    background-color: #2a7a2a;
+    color: white;
+    border: none;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #246b24;
+  }
+  .error {
+    color: #cc0000;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: none;
+  }
+  .show-password {
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #2a7a2a;
+    user-select: none;
+  }
+  .terms {
+    font-size: 12px;
+    color: #555;
+    text-align: center;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="container" role="main" aria-labelledby="mainTitle">
+  <h2 id="mainTitle">Welcome to Eat Smart</h2>
+  <div class="tabs" role="tablist">
+    <div class="tab active" role="tab" tabindex="0" aria-selected="true" aria-controls="loginForm" id="loginTab">Login</div>
+    <div class="tab" role="tab" tabindex="-1" aria-selected="false" aria-controls="registerForm" id="registerTab">Register</div>
+  </div>
+
+  <form id="loginForm" class="active" novalidate>
+    <label for="loginEmail">Email</label>
+    <input type="email" id="loginEmail" name="loginEmail" placeholder="Enter your email" required aria-describedby="loginEmailError" />
+    <div id="loginEmailError" class="error">Please enter a valid email.</div>
+
+    <label for="loginPassword">Password</label>
+    <input type="password" id="loginPassword" name="loginPassword" placeholder="Enter your password" required aria-describedby="loginPasswordError" />
+    <label><input type="checkbox" id="showLoginPassword" /> Show password</label>
+    <div id="loginPasswordError" class="error">Password is required.</div>
+
+    <button type="submit">Sign In</button>
+    <p class="terms">By continuing, you agree to our terms of service and privacy policy.</p>
+  </form>
+
+  <form id="registerForm" novalidate>
+    <label for="fullName">Full Name</label>
+    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required aria-describedby="fullNameError" />
+    <div id="fullNameError" class="error">Please enter a valid full name (letters and spaces only).</div>
+
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age" placeholder="Age" min="1" max="120" required aria-describedby="ageError" />
+    <div id="ageError" class="error">Please enter a valid age (1-120).</div>
+
+    <label for="gender">Gender</label>
+    <select id="gender" name="gender" required aria-describedby="genderError">
+      <option value="" disabled selected>Select gender</option>
+      <option value="female">Female</option>
+      <option value="male">Male</option>
+      <option value="other">Other</option>
+      <option value="prefer_not_say">Prefer not to say</option>
+    </select>
+    <div id="genderError" class="error">Please select your gender.</div>
+
+    <label for="allergyHealthCondition">Allergy and Health Condition (Optional)</label>
+    <select id="allergyHealthCondition" name="allergyHealthCondition" multiple size="5" aria-describedby="allergyHealthConditionHelp" style="width: 100%; padding: 8px 10px; border: 1px solid #aaa; border-radius: 4px; font-size: 14px; font-family: Arial, sans-serif; margin-bottom: 14px;">
+      <option value="lactose_intolerant">Lactose Intolerant</option>
+      <option value="soy_allergy">Soy Allergy</option>
+      <option value="peanuts_allergy">Peanuts Allergy</option>
+      <option value="diabetes">Diabetes</option>
+      <option value="obesity">Obesity</option>
+      <option value="kidney_problem">Kidney Problem</option>
+      <option value="fish_allergy">Fish Allergy</option>
+      <option value="sulphite_sensitivity">Sulphite Sensitivity</option>
+      <option value="heart_conditions">Heart Conditions</option>
+    </select>
+    <small id="allergyHealthConditionHelp" style="color: #555; font-size: 12px;">Hold Ctrl (Cmd on Mac) to select multiple options.</small>
+
+    <label for="registerEmail">Email</label>
+    <input type="email" id="registerEmail" name="registerEmail" placeholder="Enter your email" required aria-describedby="registerEmailError" />
+    <div id="registerEmailError" class="error">Please enter a valid email.</div>
+
+    <label for="registerPassword">Password</label>
+    <input type="password" id="registerPassword" name="registerPassword" placeholder="Create a password" required aria-describedby="registerPasswordError" />
+    <label><input type="checkbox" id="showRegisterPassword" /> Show password</label>
+    <div id="registerPasswordError" class="error">
+      Password must be at least 8 characters, include uppercase, lowercase, number, and special character.
+    </div>
+
+    <button type="submit">Create Account</button>
+    <p class="terms">By continuing, you agree to our terms of service and privacy policy.</p>
+  </form>
+</div>
+
+<script>
+  // Tab switching
+  const loginTab = document.getElementById('loginTab');
+  const registerTab = document.getElementById('registerTab');
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+
+  loginTab.addEventListener('click', () => {
+    loginTab.classList.add('active');
+    registerTab.classList.remove('active');
+    loginTab.setAttribute('aria-selected', 'true');
+    registerTab.setAttribute('aria-selected', 'false');
+    loginTab.setAttribute('tabindex', '0');
+    registerTab.setAttribute('tabindex', '-1');
+    loginForm.classList.add('active');
+    registerForm.classList.remove('active');
+  });
+
+  registerTab.addEventListener('click', () => {
+    registerTab.classList.add('active');
+    loginTab.classList.remove('active');
+    registerTab.setAttribute('aria-selected', 'true');
+    loginTab.setAttribute('aria-selected', 'false');
+    registerTab.setAttribute('tabindex', '0');
+    loginTab.setAttribute('tabindex', '-1');
+    registerForm.classList.add('active');
+    loginForm.classList.remove('active');
+  });
+
+  // Show/hide password toggle
+  document.getElementById('showLoginPassword').addEventListener('change', function() {
+    const pwd = document.getElementById('loginPassword');
+    pwd.type = this.checked ? 'text' : 'password';
+  });
+  document.getElementById('showRegisterPassword').addEventListener('change', function() {
+    const pwd = document.getElementById('registerPassword');
+    pwd.type = this.checked ? 'text' : 'password';
+  });
+
+  // Validation helpers
+  function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+  function isValidFullName(name) {
+    const re = /^[A-Za-z\s]{2,}$/;
+    return re.test(name.trim());
+  }
+  function isValidPassword(password) {
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    return re.test(password);
+  }
+  function isValidAge(age) {
+    return Number.isInteger(age) && age >= 1 && age <= 120;
+  }
+
+  // Login form validation
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let valid = true;
+
+    const emailInput = loginForm.loginEmail;
+    const passwordInput = loginForm.loginPassword;
+
+    if (!isValidEmail(emailInput.value)) {
+      valid = false;
+      showError('loginEmailError');
+    } else {
+      hideError('loginEmailError');
+    }
+
+    if (!passwordInput.value.trim()) {
+      valid = false;
+      showError('loginPasswordError');
+    } else {
+      hideError('loginPasswordError');
+    }
+
+    if (valid) {
+      alert('Login successful!');
+      loginForm.reset();
+    }
+  });
+
+  // Register form validation
+  registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let valid = true;
+
+    const fullNameInput = registerForm.fullName;
+    const ageInput = registerForm.age;
+    const genderInput = registerForm.gender;
+    const emailInput = registerForm.registerEmail;
+    const passwordInput = registerForm.registerPassword;
+
+    if (!isValidFullName(fullNameInput.value)) {
+      valid = false;
+      showError('fullNameError');
+    } else {
+      hideError('fullNameError');
+    }
+
+    const ageVal = parseInt(ageInput.value, 10);
+    if (!isValidAge(ageVal)) {
+      valid = false;
+      showError('ageError');
+    } else {
+      hideError('ageError');
+    }
+
+    if (!genderInput.value) {
+      valid = false;
+      showError('genderError');
+    } else {
+      hideError('genderError');
+    }
+
+    if (!isValidEmail(emailInput.value)) {
+      valid = false;
+      showError('registerEmailError');
+    } else {
+      hideError('registerEmailError');
+    }
+
+    if (!isValidPassword(passwordInput.value)) {
+      valid = false;
+      showError('registerPasswordError');
+    } else {
+      hideError('registerPasswordError');
+    }
+
+    if (valid) {
+      alert('Account created successfully!');
+      registerForm.reset();
+      loginTab.click();
+    }
+  });
+
+  function showError(id) {
+    document.getElementById(id).style.display = 'block';
+  }
+  function hideError(id) {
+    document.getElementById(id).style.display = 'none';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/register_css.css">
+    <title>Login Form</title>
+</head>
+<body>
+    
+        <!-- ✅ Message display block -->
+        {% if messages %}
+            <div id="message-container">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+    
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                const messageContainer = document.getElementById("message-container");
+                if (messageContainer) {
+                  setTimeout(() => {
+                    messageContainer.style.transition = "opacity 0.5s ease-out";
+                    messageContainer.style.opacity = 0;
+                    setTimeout(() => messageContainer.remove(), 500);
+                  }, 4000);
+                }
+              });
+            </script>
+    
+            <style>
+              .alert {
+                padding: 10px 20px;
+                margin: 20px auto;
+                width: fit-content;
+                border-radius: 6px;
+                font-weight: bold;
+                font-family: sans-serif;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+              }
+              .alert.success { background-color: #d4edda; color: #155724; }
+              .alert.info    { background-color: #d1ecf1; color: #0c5460; }
+              .alert.warning { background-color: #fff3cd; color: #856404; }
+              .alert.error   { background-color: #f8d7da; color: #721c24; }
+            </style>
+        {% endif %}
+    
+        <div class="container">
+        <form action="/login/" method="POST" class="login active">
+        {% csrf_token %}
+            <h2 class="title">Login with your account</h2>
+            <!-- Role Selection Section -->
+            {% comment %} <div class="form-group "> {% endcomment %}
+                {% comment %} <label>Select Role:</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="role" value="user" checked> User
+                    </label>
+                    <label>
+                        <input type="radio" name="role" value="admin"> Admin
+                    </label>
+                </div> {% endcomment %}
+            {% comment %} </div> {% endcomment %}
+            <div class="form-group">
+                <label for="email">Username</label>
+                <div class="input-group">
+                    <input type="text" id="email" placeholder="username" name=username required>
+                    <i class="bx bx-envelope"></i>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Enter your password" name="password" required>
+                    <i class="bx bx-lock-alt"></i>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">Login</button>
+           {% comment %}  <a href="/forgot_password">Forgot Password</a> {% endcomment %}
+            <p>Don't have an account? <a href="/register">Register</a></p>
+        </form>
+    </div>
+    <script src="static/script.js"></script>
+</body>
+</html>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root{
+    --grey: #F4F2FF;
+    --dark-grey: #B7B7B7;
+
+    --green: #23AE00;
+    --light-green: #BDFFAC;
+
+    --red: #FE2727;
+    --light-red: #FFD2D2;
+
+    --blue: #277FFE;
+    --light-blue: #B6C6FF;
+    --dark-blue:#1368E3;
+
+    --bs: #AECFFf;
+    --text:#9B9B9B;
+}
+
+a { 
+   color: var(--green);
+   transition: all .3s ease;
+   text-decoration: none;
+}
+
+a:hover {
+    color: var(--light-green);
+}
+
+body {
+    background: url(static\images\plant-2.png);
+    background-size:cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding:0 16px ;
+}
+
+ .container {
+    max-width: 500px;
+    width:100%;
+    position: relative;
+}
+form {
+    width: 100%;
+    padding: 28px;
+    border-radius: 12px;
+    background: #fff;
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%) scale(.8);
+    opacity: 0;
+    z-index: 100;
+    transition: all .3s ease;
+    transition-delay: 0s;
+}
+form.active {
+    transform: translateY(-50%);
+    opacity: 1;
+    z-index: 200;
+    transition-delay: .3s;
+}
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.form-group {
+     margin-bottom: 14px;
+}
+.form-group label {
+     display: inline-block;
+     margin-bottom: 4px;
+}
+.input-group {
+    width: 100%;
+    position: relative;
+}
+.input-group input {
+    padding: 12px 40px 12px 20px;
+    outline: none;
+    border-radius: 6px;
+    border: 1px solid var(--dark-grey);
+    width: 100%;
+    transition: all .3s ease;
+}
+
+/* validation */
+.input-group input:focus,
+.input-group input:not(:placeholder-shown){
+    border-color: var(--green);
+    background: var(--grey);
+}
+.input-group input:focus +i,
+.input-group input:not(:placeholder-shown)+i{
+    color: var(--green);
+}
+.input-group input:focus {
+      box-shadow: 0 0 0 4px var(--light-green)
+}
+/* validation */
+
+.input-group i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    color:var(--text);
+    pointer-events : none;
+    transition: all .3s ease;
+}
+.form-group .help-text{
+   font-size: 12px;
+   color: var(--text);
+}
+.btn-submit {
+    padding: 12px 0;
+    display: block;
+    width: 100%;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .3s ease;
+    border: none;
+    font-weight: 500;
+    background: var(--green);
+    margin-bottom: 20px;
+}
+.btn-submit:hover {
+      background: var(--light-green);
+}
+.contact
+{
+    position: relative;
+    min-height: 100vh;
+    padding: 50px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: url();
+    background-size: cover;
+
+}
+</style>

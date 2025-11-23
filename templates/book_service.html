@@ -1,0 +1,210 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>Service Booking Form</title>
+    <script>
+        function updateDetails() {
+            const services = {{ services_json|safe }};
+            const selectedId = document.getElementById("service").value;
+            const service = services.find(s => s.service_id == selectedId);
+
+            document.getElementById("description").value = service.description;
+            document.getElementById("price").value = service.price;
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f4f4f4;
+            padding: 20px;
+            background-image: url(plant5.jpg);
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #555;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background: #fafafa;
+        }
+
+        textarea {
+            resize: none;
+            height: 60px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            background: green;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: darkgreen;
+        }
+        .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    margin-bottom: 20px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background:rgb(7, 184, 7);
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow:rgb(62, 211, 62) ;
+    transition: background 0.3s;
+}
+
+.back-button:hover {
+    background: #14a10d;
+}
+
+    </style>
+</head>
+<body>
+   
+  
+    <a href="/user_index" class="back-button"><i class='bx bx-arrow-back'></i> Back</a>
+
+    <div class="container">
+        <h2>Book a Service</h2>
+        
+        <form action="" method="post" >
+            {% csrf_token %}
+            <!-- Auto-generated Customer ID -->
+            <!-- <label for="customerId">Customer ID:</label>
+            <input type="text" id="customerId" readonly> -->
+
+            <!-- Customer Name -->
+            <label for="customerName">Name:</label>
+            <input type="text" id="User_Name" placeholder="Enter your name" name="User_name" value="{{request.user}}" readonly>
+
+            <!-- Customer Address -->
+            <label for="customerAddress">Address:</label>
+            <textarea id="customerAddress" placeholder="Enter your address" name="address1" required></textarea>
+
+            <!-- Service Selection -->
+            <label for="service">Select a Service:</label>
+            {% comment %} <textarea id="customerAddress" placeholder="Enter service number" name="service" required></textarea> {% endcomment %}
+            <select id="service" name="service" onchange="updateDetails()" required>
+                
+                <option value="" >Select a service</option>
+
+                {% for s in services %}
+                <option value="{{ s.service_id }}"
+                data-price="{{s.price}}"
+                data-description="{{s.description}}">{{ s.name }}</option>
+                {% endfor %}
+                
+
+                {% comment %} <option value="Planting" data-price="50" data-details="Professional forester planting your favorite plants.">Planting</option>
+                <option value="Pruning" data-price="40" data-details="Trimming trees to maintain health and beauty.">Tree Pruning</option>
+                <option value="Fertilizing" data-price="30" data-details="Providing essential nutrients for healthy growth.">Fertilizing</option>
+                <option value="Watering" data-price="25" data-details="Regular watering to keep plants hydrated.">Watering</option>
+                <option value="Lawn Care" data-price="60" data-details="Mowing, aeration, and maintenance for a lush lawn.">Lawn Care</option>
+                <option value="Garden Beautification" data-price="100" data-details="Enhancing the aesthetics of your garden with design elements.">Garden Beautification</option>
+                <option value="Landscaping" data-price="200" data-details="Complete garden transformation with professional landscaping.">Landscaping</option> {% endcomment %}
+            </select><br><br>
+
+            <!-- Price Display -->
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price"  readonly>
+
+            <!-- Service Details -->
+            <label for="description">Service Details:</label>
+            <textarea id="description"  name="description" rows="3" cols="40" readonly></textarea>
+
+            <button type="submit" >Save And Invoice</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to auto-generate a Customer ID
+        // function generateCustomerId() {
+        //     let id = "CUST" + Math.floor(Math.random() * 10000); // Unique random ID
+        //     document.getElementById("customerId").value = id;
+        // }
+
+        // Function to update price and details based on service selection
+        function updateDetails() {
+            let service = document.getElementById("service");
+            let selectedOption = service.options[service.selectedIndex];
+
+            if (selectedOption.value !== "") {
+                document.getElementById("price").value = "$" + selectedOption.getAttribute("data-price");
+                document.getElementById("description").value = selectedOption.getAttribute("data-description");
+            }
+        }
+
+        // Generate Customer ID on page load
+        // window.onload = generateCustomerId;
+
+      
+    {% comment %} function handleBooking(event) {
+        event.preventDefault(); // Prevent form from submitting normally
+        alert(" Booking Confirmed! Thank you for choosing our service.");
+        
+        // Optionally, reset the form:
+        document.querySelector("form").reset();
+
+        // Clear price and details
+        document.getElementById("price").value = "";
+        document.getElementById("details").value = "";
+    } {% endcomment %}
+
+
+    </script>
+
+</body>
+</html>

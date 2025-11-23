@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ plant.name }} - Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Include FontAwesome for icons -->
+    <style>
+        /* Basic styling for layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar style */
+        .navbar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Button and link styles in navbar */
+        .navbar button, .navbar a {
+            color: white;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Product details section */
+        .product-details {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .product-info {
+            margin-top: 20px;
+        }
+
+        .product-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .product-description {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .product-price {
+            font-size: 22px;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- ✅ Message display block -->
+    {% if messages %}
+    <div id="message-container">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const messageContainer = document.getElementById("message-container");
+        if (messageContainer) {
+          setTimeout(() => {
+            messageContainer.style.transition = "opacity 0.5s ease-out";
+            messageContainer.style.opacity = 0;
+            setTimeout(() => messageContainer.remove(), 500);
+          }, 4000);
+        }
+      });
+    </script>
+
+    <style>
+      .alert {
+        padding: 10px 20px;
+        margin: 20px auto;
+        width: fit-content;
+        border-radius: 6px;
+        font-weight: bold;
+        font-family: sans-serif;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .alert.success { background-color: #d4edda; color: #155724; }
+      .alert.info    { background-color: #d1ecf1; color: #0c5460; }
+      .alert.warning { background-color: #fff3cd; color: #856404; }
+      .alert.error   { background-color: #f8d7da; color: #721c24; }
+    </style>
+{% endif %}
+
+    <!-- Navbar Section -->
+    <nav class="navbar">
+        <!-- Back button with icon -->
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+
+        <!-- Home button -->
+        <a href="/user_index" class="home-btn">Home</a>
+
+        <!-- Cart icon with item count -->
+        <div class="cart-container">
+            <a href="/view_cart" class="cart-btn">
+                <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Product Details Section -->
+    <div class="product-details">
+        <!-- Product Image (for example) -->
+           
+       
+        <div class="product-card"  style="max-width: 600px; margin: auto; padding: 20px; background: #fff; border-radius: 10px;">
+            {% if plant.image %}
+            <img src="{{ plant.image.url }}"  alt="{{ plant.name }}"style="width: 100%; border-radius: 10px;" class="product-img">
+            <p>{{ plant.image.url }}</p>
+            {% endif %}
+            <div >
+                <h3 class="product-name">Plant Name:{{ plant.name }}</h3>
+                <p class="product-name">Price:{{ plant.price }}</p>
+                {% comment %} <p class="product-name">Type:{{ plant.type.t_name }}</p> {% endcomment %}
+                
+                <p class="product-name">Description:{{ plant.description }}</p>
+
+            <!-- <button class="view-details" onclick="viewDetails('plant1')">View Details</button> -->
+            {% comment %} <button class="view-details"  ><a href="/view_plant">View Details</a></button> {% endcomment %}
+
+            <form method="POST" action="{% url 'add_to_cart' %}">
+                {% csrf_token %}
+                <input type="hidden" name="plant_id" value="{{ plant.id }}">
+                <button type="submit" class="btn">Add to Cart</button>
+            </form>
+
+            {% comment %} <form method="POST" action="">
+                {% csrf_token %}
+                <input type="hidden" name="plant_id" value="{{ plant.id }}">
+                <button type="submit" class="btn buy">Buy Now</button>
+            </form> {% endcomment %}
+            </div>
+            
+        </div>       
+            
+        
+        {% comment %} <p>No plants found.</p>
+        {% endfor %} {% endcomment %}
+    </div>
+
+    {% comment %} <script>
+        // JavaScript to handle the product details and cart functionality
+
+        // Get the product ID from the URL (query parameter)
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id'); // Get the 'id' from the URL
+
+        // Function to fetch product details
+        function getProductDetails(productId) {
+            const products = {
+                'plant1': {
+                    name: 'Pink Hibiscus',
+                    scientificName: 'Hibiscus spp.',
+                    family: 'Malvaceae',
+                    commonNames: 'Rose Mallow, China Rose, Shoeblackplant, Roselle',
+                    price: '$12.99',
+                    imgSrc: 'hibiscus1.jpg'
+                },
+                'plant2': {
+                    name: 'Red Hibiscus',
+                    description: 'Petals in Red Color.',
+                    price: '$15.99',
+                    imgSrc: 'hibiscus2.jpg'
+                },
+                'plant3': {
+                    name: 'Money Plant',
+                    description: 'An evergreen vine growing up to 20 m tall.',
+                    price: '$45',
+                    imgSrc: 'money.jpg'
+                }
+            };
+
+            // Use the productId to fetch the correct product's details
+            const product = products[productId];
+
+            if (product) {
+                // Update the page with the product details
+                document.getElementById('product-name').innerText = product.name;
+                document.getElementById('product-description').innerText = product.description;
+                document.getElementById('product-price').innerText = product.price;
+                document.getElementById('product-img').src = product.imgSrc;
+            } else {
+                // If product is not found, show an error message
+                document.querySelector('.product-details').innerHTML = '<p>Product not found.</p>';
+            }
+        }
+
+        // Call the function to display product details
+        getProductDetails(productId);
+
+        // Function to handle adding the product to the cart
+        function addToCart() {
+            alert('Product added to cart!');
+            // Implement the logic to add the product to the cart
+        }
+
+        // Function to handle buying the product directly
+        function buyNow() {
+            alert('Proceeding to buy the product!');
+            // Implement the logic to proceed to the checkout or payment page
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% url 'checkout' %} {% endcomment %} 
