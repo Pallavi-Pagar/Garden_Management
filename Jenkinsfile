@@ -4,6 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "garden_app"
         IMAGE_TAG = "v1"
+        SONARQUBE_TOKEN = credentials('SONARQUBE_TOKEN')
     }
 
     stages {
@@ -19,10 +20,14 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarqube') {
                     sh """
+                        docker run --rm \
+                        -v \$PWD:/usr/src \
+                        sonarsource/sonar-scanner-cli \
                         sonar-scanner \
-                        -Dsonar.projectKey=garden \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=http://sonarqube.imcc.com/
+                          -Dsonar.projectKey=garden \
+                          -Dsonar.sources=. \
+                          -Dsonar.host.url=http://sonarqube.imcc.com/ \
+                          -Dsonar.login=$SONARQUBE_TOKEN
                     """
                 }
             }
