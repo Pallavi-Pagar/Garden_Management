@@ -1,13 +1,7 @@
 pipeline {
     agent any
 
-    tools {
-        sonarScanner 'SonarScanner' 
-    }
-
     environment {
-        SONARQUBE = 'sonarqube'
-        NEXUS_REPO = 'docker-hosted'
         IMAGE_NAME = "garden_app"
         IMAGE_TAG = "v1"
     }
@@ -17,7 +11,7 @@ pipeline {
         stage('Clone Source') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/Pallavi-Pagar/Garden_Management.git'
+                    url: 'https://github.com/Pallavi-Pagar/Garden_Management.git'
             }
         }
 
@@ -25,10 +19,10 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarqube') {
                     sh """
-                    sonar-scanner \
-                    -Dsonar.projectKey=garden \
-                    -Dsonar.sources=. \
-                    -Dsonar.host.url=http://sonarqube.imcc.com/
+                        sonar-scanner \
+                        -Dsonar.projectKey=garden \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=http://sonarqube.imcc.com/
                     """
                 }
             }
@@ -50,7 +44,7 @@ pipeline {
             }
         }
 
-        stage('Deploy on College Server') {
+        stage('Deploy on Server') {
             steps {
                 sh """
                     docker stop garden || true
