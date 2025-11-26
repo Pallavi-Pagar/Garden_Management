@@ -154,3 +154,12 @@ EMAIL_HOST_PASSWORD="rheq pyng lgfv nnhr"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgres://postgres:postgres@db:5432/postgres'
+    )
+}
