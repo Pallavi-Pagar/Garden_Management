@@ -1,20 +1,17 @@
 pipeline {
 
-    agent any
+    agent {
+        kubernetes {
+            label 'my-jenkins-jenkins-agent'
+            defaultContainer 'jnlp'
+        }
+    }
 
     environment {
         IMAGE_NAME = "garden_app"
         IMAGE_TAG = "v1"
 
-        // SonarQube credentials (secret text)
         SONARQUBE_TOKEN = credentials('SONARQUBE_TOKEN')
-
-        // Nexus credentials
-        NEXUS_USER = "student"
-        NEXUS_PASSWORD = "Imcc@2025"
-
-        SONAR_URL = "http://sonarqube.imcc.com"
-        NEXUS_URL = "nexus.imcc.com"
     }
 
     stages {
@@ -27,52 +24,58 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-    steps {
-        withSonarQubeEnv('sonarqube') {
-            sh """
-                docker run --rm \
-                    -v ${WORKSPACE}:/usr/src \
-                    --network host \
-                    sonarsource/sonar-scanner-cli \
-                    sonar-scanner \
-                    -Dsonar.projectKey=garden \
-                    -Dsonar.sources=. \
-                    -Dsonar.host.url=http://sonarqube.imcc.com \
-                    -Dsonar.login=$SONARQUBE_TOKEN
-            """
+            steps {
+                container('dind') {
+                    withSonarQubeEnv('sonarqube') {
+                        sh """
+                            docker run --rm \
+                            -v ${WORKSPACE}:/usr/src \
+                            sonarsource/sonar-scanner-cli \
+                            sonar-scanner \
+                                -Dsonar.projectKey=garden \
+                                -Dsonar.sources=. \
+                                -Dsonar.host.url=http://sonarqube.imcc.com \
+                                -Dsonar.login=$SONARQUBE_TOKEN
+                        """
+                    }
+                }
+            }
         }
-    }
-}
-
 
         stage('Build Docker Image') {
             steps {
-                sh """
-                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
-                """
+                container('dind') {
+                    sh """
+                        docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+                    """
+                }
             }
         }
 
         stage('Push to Nexus') {
             steps {
-                sh """
-                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${NEXUS_URL}/${IMAGE_NAME}:${IMAGE_TAG}
-                    echo ${NEXUS_PASSWORD} | docker login ${NEXUS_URL} -u ${NEXUS_USER} --password-stdin
-                    docker push ${NEXUS_URL}/${IMAGE_NAME}:${IMAGE_TAG}
-                """
+                container('dind') {
+                    sh """
+                        docker tag ${IMAGE_NAME}:${IMAGE_TAG} nexus.imcc.com/${IMAGE_NAME}:${IMAGE_TAG}
+                        echo "Imcc@2025" | docker login nexus.imcc.com -u student --password-stdin
+                        docker push nexus.imcc.com/${IMAGE_NAME}:${IMAGE_TAG}
+                    """
+                }
             }
         }
 
-        stage('Deploy on Server') {
+        stage('Deploy On Server') {
             steps {
-                sh """
-                    docker stop garden || true
-                    docker rm garden || true
+                container('dind') {
+                    sh """
+                        docker stop garden || true
+                        docker rm garden || true
 
-                    docker run -d --name garden \
-                        -p 8000:8000 \
-                        ${NEXUS_URL}/${IMAGE_NAME}:${IMAGE_TAG}
-                """
+                        docker run -d --name garden \
+                            -p 8000:8000 \
+                            nexus.imcc.com/${IMAGE_NAME}:${IMAGE_TAG}
+                    """
+                }
             }
         }
     }
