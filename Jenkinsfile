@@ -27,18 +27,23 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh """
-                        sonar-scanner \
-                        -Dsonar.projectKey=garden \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=$SONAR_URL \
-                        -Dsonar.login=$SONARQUBE_TOKEN
-                    """
-                }
-            }
+    steps {
+        withSonarQubeEnv('sonarqube') {
+            sh """
+                docker run --rm \
+                    -v ${WORKSPACE}:/usr/src \
+                    --network host \
+                    sonarsource/sonar-scanner-cli \
+                    sonar-scanner \
+                    -Dsonar.projectKey=garden \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=http://sonarqube.imcc.com \
+                    -Dsonar.login=$SONARQUBE_TOKEN
+            """
         }
+    }
+}
+
 
         stage('Build Docker Image') {
             steps {
