@@ -27,7 +27,8 @@ pipeline {
                             sonar-scanner \
                               -Dsonar.projectKey=garden \
                               -Dsonar.sources=. \
-                              -Dsonar.host.url=http://sonarqube.imcc.com/ \
+                              -Dsonar.host.url=http://sonarqube.svc.cluster.local \
+
                               -Dsonar.login=$SONARQUBE_TOKEN
                         """
                     }
